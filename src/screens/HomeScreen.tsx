@@ -93,7 +93,7 @@ export function HomeScreen() {
         )}
 
         <View style={styles.detailsSection}>
-          <WeatherDetails weather={currentWeather} />
+          <WeatherDetails weather={currentWeather} unit={temperatureUnit} />
         </View>
       </ScrollView>
     </LinearGradient>

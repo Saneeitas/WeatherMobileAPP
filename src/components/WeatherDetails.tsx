@@ -2,10 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/colors';
-import { WeatherData } from '@/types/weather';
+import { WeatherData, TemperatureUnit } from '@/types/weather';
+import { formatWindSpeed } from '@/utils/helpers';
 
 interface WeatherDetailsProps {
   weather: WeatherData;
+  unit?: TemperatureUnit;
 }
 
 interface DetailItem {
@@ -23,7 +25,7 @@ function formatTime(timestamp: number, timezone: number): string {
   return `${displayHour}:${minutes.toString().padStart(2, '0')} ${period}`;
 }
 
-export function WeatherDetails({ weather }: WeatherDetailsProps) {
+export function WeatherDetails({ weather, unit = 'metric' }: WeatherDetailsProps) {
   const details: DetailItem[] = [
     {
       icon: 'water-outline',
@@ -33,7 +35,7 @@ export function WeatherDetails({ weather }: WeatherDetailsProps) {
     {
       icon: 'speedometer-outline',
       label: 'Wind',
-      value: `${weather.windSpeed} m/s`,
+      value: formatWindSpeed(weather.windSpeed, unit),
     },
     {
       icon: 'thermometer-outline',

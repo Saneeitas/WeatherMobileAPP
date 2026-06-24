@@ -3,6 +3,7 @@ import React, {
   useReducer,
   useCallback,
   useEffect,
+  useRef,
   ReactNode,
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -135,18 +136,15 @@ export function LocationProvider({ children }: LocationProviderProps) {
       };
 
       dispatch({ type: 'ADD_LOCATION', payload: newLocation });
-      await persistLocations([...state.savedLocations, newLocation]);
     },
-    [state.savedLocations, persistLocations]
+    [state.savedLocations]
   );
 
   const removeLocation = useCallback(
     async (id: string) => {
       dispatch({ type: 'REMOVE_LOCATION', payload: id });
-      const updated = state.savedLocations.filter((loc) => loc.id !== id);
-      await persistLocations(updated);
     },
-    [state.savedLocations, persistLocations]
+    []
   );
 
   const clearAllLocations = useCallback(async () => {
@@ -162,6 +160,21 @@ export function LocationProvider({ children }: LocationProviderProps) {
   useEffect(() => {
     loadSavedLocations();
   }, [loadSavedLocations]);
+
+  // Track whether initial load has completed to avoid persisting the empty initial state
+  const hasLoadedRef = useRef(false);
+
+  // Persist saved locations whenever they change (after initial load)
+  useEffect(() => {
+    if (!hasLoadedRef.current) {
+      // Mark as loaded after the first SET_SAVED_LOCATIONS dispatch triggers a re-render
+      if (!state.isLoading) {
+        hasLoadedRef.current = true;
+      }
+      return;
+    }
+    persistLocations(state.savedLocations);
+  }, [state.savedLocations, persistLocations]);
 
   const value: LocationContextValue = {
     state,
