@@ -23,10 +23,11 @@ android/
 .DS_Store
 Thumbs.db
 
-# Debug
+# Debug and logs
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+*.log
 
 # TypeScript
 *.tsbuildinfo

@@ -2,7 +2,7 @@
   "id": "FEAT-003",
   "type": "chore",
   "description": "Add documentation (comprehensive README with setup instructions, screenshots placeholders, architecture overview) and ensure all files have consistent formatting, proper exports, and the project is ready to run after npm install.",
-  "status": "pending",
+  "status": "in_progress",
   "steps": [
     "Update README.md with: project title and description, features list, tech stack, architecture overview diagram (text-based), setup instructions (prerequisites, clone, npm install, create .env with API key, npx expo start), project structure tree, screenshots section (placeholder), API setup guide (how to get OpenWeatherMap API key), environment variables documentation, contributing guidelines.",
     "Create .env.example with EXPO_PUBLIC_WEATHER_API_KEY=your_openweathermap_api_key_here",
