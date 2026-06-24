@@ -1,45 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/colors';
-
-// Placeholder screens - will be replaced by actual screen components in FEAT-002
-function HomeScreen() {
-  return (
-    <View style={styles.placeholder}>
-      <Text style={styles.placeholderText}>Home Screen</Text>
-      <Text style={styles.placeholderSubtext}>Current weather will appear here</Text>
-    </View>
-  );
-}
-
-function ForecastScreen() {
-  return (
-    <View style={styles.placeholder}>
-      <Text style={styles.placeholderText}>Forecast Screen</Text>
-      <Text style={styles.placeholderSubtext}>5-day forecast will appear here</Text>
-    </View>
-  );
-}
-
-function LocationsScreen() {
-  return (
-    <View style={styles.placeholder}>
-      <Text style={styles.placeholderText}>Locations Screen</Text>
-      <Text style={styles.placeholderSubtext}>Saved locations will appear here</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={styles.placeholder}>
-      <Text style={styles.placeholderText}>Settings Screen</Text>
-      <Text style={styles.placeholderSubtext}>App settings will appear here</Text>
-    </View>
-  );
-}
+import { HomeScreen } from '@/screens/HomeScreen';
+import { ForecastScreen } from '@/screens/ForecastScreen';
+import { LocationsScreen } from '@/screens/LocationsScreen';
+import { SettingsScreen } from '@/screens/SettingsScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -63,16 +30,8 @@ export function AppNavigator() {
         },
         tabBarActiveTintColor: Colors.primary,
         tabBarInactiveTintColor: Colors.mediumGray,
-        tabBarStyle: {
-          backgroundColor: Colors.white,
-          borderTopColor: Colors.lightGray,
-          paddingBottom: 4,
-          height: 60,
-        },
-        tabBarLabelStyle: {
-          fontSize: 11,
-          fontWeight: '600',
-        },
+        tabBarStyle: styles.tabBar,
+        tabBarLabelStyle: styles.tabBarLabel,
         headerShown: false,
       })}
     >
@@ -85,20 +44,14 @@ export function AppNavigator() {
 }
 
 const styles = StyleSheet.create({
-  placeholder: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.offWhite,
+  tabBar: {
+    backgroundColor: Colors.white,
+    borderTopColor: Colors.lightGray,
+    paddingBottom: 4,
+    height: 60,
   },
-  placeholderText: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: Colors.textDark,
-    marginBottom: 8,
-  },
-  placeholderSubtext: {
-    fontSize: 14,
-    color: Colors.textMuted,
+  tabBarLabel: {
+    fontSize: 11,
+    fontWeight: '600',
   },
 });
