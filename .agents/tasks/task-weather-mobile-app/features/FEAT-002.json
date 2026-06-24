@@ -1,0 +1,44 @@
+{
+  "id": "FEAT-002",
+  "type": "feat",
+  "description": "Implement all screen components and reusable UI components with a modern, clean, simple design. This includes the Home screen (current weather display), Forecast screen (5-day and hourly forecast), Locations screen (search and manage saved locations), and Settings screen (temperature unit toggle, about info). All reusable UI components (WeatherCard, ForecastCard, SearchBar, LocationCard, TemperatureDisplay, WeatherIcon, LoadingSpinner, ErrorMessage) are included here.",
+  "status": "pending",
+  "steps": [
+    "Create src/components/WeatherIcon.tsx - renders appropriate weather icon based on condition code using @expo/vector-icons Ionicons, with size and color props.",
+    "Create src/components/TemperatureDisplay.tsx - shows temperature with degree symbol, supports both Celsius and Fahrenheit display, large/medium/small size variants.",
+    "Create src/components/WeatherCard.tsx - card component showing: weather icon, temperature, condition text, high/low temps, feels-like temp. Uses LinearGradient background based on temperature (warm colors for hot, cool colors for cold).",
+    "Create src/components/HourlyForecastItem.tsx - compact horizontal item showing hour, icon, and temperature for hourly scrollable list.",
+    "Create src/components/DailyForecastItem.tsx - row item for daily forecast showing day name, icon, high/low temps with a min-max bar visualization.",
+    "Create src/components/SearchBar.tsx - text input with search icon, clear button, debounced onChangeText callback for city search.",
+    "Create src/components/LocationCard.tsx - card for saved location showing city name, current temp, condition, with swipe-to-delete or delete button.",
+    "Create src/components/LoadingSpinner.tsx - centered ActivityIndicator with optional message text.",
+    "Create src/components/ErrorMessage.tsx - error display with icon, message text, and retry button.",
+    "Create src/components/WeatherDetails.tsx - grid showing weather details: humidity, wind speed, pressure, visibility, UV index, sunrise/sunset times.",
+    "Create src/screens/HomeScreen.tsx - main weather screen: pulls current location weather from context, displays WeatherCard at top, horizontal scrollable HourlyForecastItem list, WeatherDetails grid below. Pull-to-refresh enabled. Background gradient changes based on time of day (light blue for day, dark blue for night).",
+    "Create src/screens/ForecastScreen.tsx - displays 5-day forecast: header with location name, list of DailyForecastItem rows with expandable detail (shows hourly breakdown when tapped). Clean card-based layout.",
+    "Create src/screens/LocationsScreen.tsx - top SearchBar for finding cities, list of saved LocationCard items below, floating add button. Tapping a search result adds it to saved locations. Tapping a saved location navigates to its weather on HomeScreen.",
+    "Create src/screens/SettingsScreen.tsx - clean settings list with: temperature unit toggle (C/F), app version info, data attribution (OpenWeatherMap), clear saved locations button with confirmation alert.",
+    "Create src/components/Header.tsx - reusable screen header with title, optional subtitle (location name), and optional right action button.",
+    "Update src/navigation/AppNavigator.tsx to properly import and render all four screen components with appropriate tab icons from Ionicons (home-outline, calendar-outline, location-outline, settings-outline)."
+  ],
+  "acceptance_criteria": [
+    "All 4 screen components exist in src/screens/ with proper TypeScript and JSX syntax",
+    "All reusable components exist in src/components/ with proper TypeScript props interfaces",
+    "HomeScreen displays current weather with gradient background, hourly forecast scroll, and weather details",
+    "ForecastScreen shows a 5-day forecast list with daily high/low temps",
+    "LocationsScreen has search functionality and saved locations list",
+    "SettingsScreen has temperature unit toggle and app info",
+    "All components use StyleSheet.create for styles (React Native pattern)",
+    "Components properly import from context/hooks for data access",
+    "Navigation properly connects all screens with tab icons",
+    "UI is clean and modern with consistent spacing, typography, and color usage from constants/colors.ts"
+  ],
+  "verification": [
+    "Verify all screen and component files exist",
+    "Read each screen file and confirm it imports and uses the appropriate components and hooks",
+    "Confirm StyleSheet usage for all styling (no inline style objects without StyleSheet)",
+    "Verify navigation file imports all screens correctly"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

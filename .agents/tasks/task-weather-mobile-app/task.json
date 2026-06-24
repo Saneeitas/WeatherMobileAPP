@@ -1,0 +1,7 @@
+{
+  "task_id": "task-weather-mobile-app",
+  "task_description": "Build a complete React Native Expo weather mobile application from scratch with modern clean UI, multiple screens (Home, Forecast, Locations, Settings), weather data from multiple locations, and security best practices. No user authentication - just weather viewing.",
+  "status": "in_progress",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003"],
+  "blocked_reason": null
+}

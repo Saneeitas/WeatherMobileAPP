@@ -1,0 +1,45 @@
+{
+  "id": "FEAT-001",
+  "type": "feat",
+  "description": "Create the complete project scaffolding including all configuration files, directory structure, and the foundation layer (types, constants, services, context providers, navigation setup). This establishes the entire app architecture in one cohesive feature.",
+  "status": "in_progress",
+  "steps": [
+    "Create package.json with all dependencies: expo (~52), react-native, react, typescript, expo-router, expo-status-bar, expo-location, expo-linear-gradient, @expo/vector-icons, react-native-safe-area-context, react-native-screens, expo-font, react-native-reanimated, @react-navigation/native. Dev deps: @types/react, typescript, jest, @testing-library/react-native, jest-expo, eslint.",
+    "Create app.json with Expo configuration (name: WeatherMobileAPP, slug: weather-mobile-app, scheme for deep linking, platforms: ios/android, splash screen config, icon placeholder references).",
+    "Create tsconfig.json extending expo's TypeScript config with strict mode and path aliases (e.g., @/ maps to src/).",
+    "Create babel.config.js with babel-preset-expo and expo-router/babel plugin, module-resolver for path aliases.",
+    "Create metro.config.js for Metro bundler configuration.",
+    "Create .eslintrc.js with recommended React Native and TypeScript rules.",
+    "Create .gitignore for React Native/Expo project (node_modules, .expo, dist, etc.).",
+    "Create src/types/weather.ts with TypeScript interfaces: WeatherData, ForecastDay, HourlyForecast, Location, WeatherCondition, TemperatureUnit.",
+    "Create src/constants/colors.ts with a clean color palette (primary blues, grays, whites, temperature-based colors for hot/cold/mild).",
+    "Create src/constants/config.ts with API configuration (OpenWeatherMap base URL, default settings, supported units).",
+    "Create src/constants/weatherIcons.ts mapping weather condition codes to icon names from @expo/vector-icons.",
+    "Create src/services/weatherApi.ts with a WeatherService class: methods for getCurrentWeather(lat, lon), getForecast(lat, lon), searchCity(query). Uses fetch with proper error handling, API key from environment variable, response type mapping to our TypeScript interfaces.",
+    "Create src/services/locationService.ts wrapping expo-location: requestPermissions(), getCurrentLocation(), with proper error handling and fallback to a default location.",
+    "Create src/context/WeatherContext.tsx with React Context providing: currentWeather, forecast, savedLocations, selectedLocation, temperatureUnit, loading state, error state, and actions (fetchWeather, addLocation, removeLocation, toggleUnit).",
+    "Create src/context/LocationContext.tsx managing saved locations list with AsyncStorage persistence.",
+    "Create src/hooks/useWeather.ts custom hook wrapping useContext(WeatherContext) with null check.",
+    "Create src/hooks/useLocation.ts custom hook wrapping useContext(LocationContext).",
+    "Create src/navigation/AppNavigator.tsx with a tab-based navigation using @react-navigation/bottom-tabs: Home (current weather), Forecast (5-day), Locations (manage saved places), Settings.",
+    "Create App.tsx as the entry point wrapping the app in SafeAreaProvider, WeatherProvider, LocationProvider, and NavigationContainer with AppNavigator.",
+    "Create assets/ directory with a placeholder .gitkeep file."
+  ],
+  "acceptance_criteria": [
+    "All configuration files (package.json, tsconfig.json, babel.config.js, app.json, metro.config.js, .eslintrc.js, .gitignore) exist and have valid JSON/JS syntax",
+    "All TypeScript type files compile (valid TS syntax with proper exports)",
+    "Service files export properly typed functions/classes with fetch-based API calls",
+    "Context providers use proper React patterns (createContext, useReducer/useState, Provider component)",
+    "Navigation is configured with 4 tabs: Home, Forecast, Locations, Settings",
+    "App.tsx properly composes all providers and renders the navigation",
+    "Directory structure follows: src/{types,constants,services,context,hooks,navigation,screens,components}"
+  ],
+  "verification": [
+    "Verify all listed files exist with correct relative paths",
+    "Read key files and confirm valid TypeScript/JSX syntax",
+    "Confirm package.json has all required dependencies listed",
+    "Confirm imports between files reference correct paths"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}
