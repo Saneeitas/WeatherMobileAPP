@@ -21,6 +21,7 @@ type LocationAction =
   | { type: 'SET_SAVED_LOCATIONS'; payload: SavedLocation[] }
   | { type: 'ADD_LOCATION'; payload: SavedLocation }
   | { type: 'REMOVE_LOCATION'; payload: string }
+  | { type: 'CLEAR_ALL_LOCATIONS' }
   | { type: 'SELECT_LOCATION'; payload: SavedLocation | null }
   | { type: 'SET_LOADING'; payload: boolean };
 
@@ -29,6 +30,7 @@ interface LocationContextValue {
   state: LocationState;
   addLocation: (name: string, country: string, coordinates: Coordinates) => Promise<void>;
   removeLocation: (id: string) => Promise<void>;
+  clearAllLocations: () => Promise<void>;
   selectLocation: (location: SavedLocation | null) => void;
   loadSavedLocations: () => Promise<void>;
 }
@@ -54,6 +56,12 @@ function locationReducer(state: LocationState, action: LocationAction): Location
         savedLocations: state.savedLocations.filter((loc) => loc.id !== action.payload),
         selectedLocation:
           state.selectedLocation?.id === action.payload ? null : state.selectedLocation,
+      };
+    case 'CLEAR_ALL_LOCATIONS':
+      return {
+        ...state,
+        savedLocations: [],
+        selectedLocation: null,
       };
     case 'SELECT_LOCATION':
       return { ...state, selectedLocation: action.payload };
@@ -141,6 +149,11 @@ export function LocationProvider({ children }: LocationProviderProps) {
     [state.savedLocations, persistLocations]
   );
 
+  const clearAllLocations = useCallback(async () => {
+    dispatch({ type: 'CLEAR_ALL_LOCATIONS' });
+    await persistLocations([]);
+  }, [persistLocations]);
+
   const selectLocation = useCallback((location: SavedLocation | null) => {
     dispatch({ type: 'SELECT_LOCATION', payload: location });
   }, []);
@@ -154,6 +167,7 @@ export function LocationProvider({ children }: LocationProviderProps) {
     state,
     addLocation,
     removeLocation,
+    clearAllLocations,
     selectLocation,
     loadSavedLocations,
   };

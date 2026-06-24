@@ -174,6 +174,22 @@ function mapForecastData(data: Record<string, unknown>): ForecastData {
 
 export const WeatherService = {
   /**
+   * Validate coordinate ranges.
+   * Latitude must be between -90 and 90, longitude between -180 and 180.
+   */
+  validateCoordinates(lat: number, lon: number): void {
+    if (typeof lat !== 'number' || typeof lon !== 'number' || isNaN(lat) || isNaN(lon)) {
+      throw new WeatherApiError('INVALID_COORDINATES', 'Coordinates must be valid numbers.');
+    }
+    if (lat < -90 || lat > 90) {
+      throw new WeatherApiError('INVALID_COORDINATES', 'Latitude must be between -90 and 90.');
+    }
+    if (lon < -180 || lon > 180) {
+      throw new WeatherApiError('INVALID_COORDINATES', 'Longitude must be between -180 and 180.');
+    }
+  },
+
+  /**
    * Fetch current weather for given coordinates.
    */
   async getCurrentWeather(
@@ -181,6 +197,8 @@ export const WeatherService = {
     lon: number,
     unit: TemperatureUnit = Config.defaults.unit
   ): Promise<WeatherData> {
+    this.validateCoordinates(lat, lon);
+
     if (!Config.api.key) {
       throw new WeatherApiError(
         'MISSING_API_KEY',
@@ -188,6 +206,9 @@ export const WeatherService = {
       );
     }
 
+    // Note: API key is passed as a query parameter per OpenWeatherMap's API requirements.
+    // For a free-tier mobile app making direct API calls, this is the standard approach.
+    // A backend proxy would be recommended for production apps with paid API keys.
     const url = `${Config.api.baseUrl}/weather?lat=${lat}&lon=${lon}&units=${unit}&lang=${Config.defaults.language}&appid=${Config.api.key}`;
 
     const response = await fetchWithTimeout(url);
@@ -209,6 +230,8 @@ export const WeatherService = {
     lon: number,
     unit: TemperatureUnit = Config.defaults.unit
   ): Promise<ForecastData> {
+    this.validateCoordinates(lat, lon);
+
     if (!Config.api.key) {
       throw new WeatherApiError(
         'MISSING_API_KEY',

@@ -9,7 +9,7 @@ import { TemperatureUnit } from '@/types/weather';
 
 export function SettingsScreen() {
   const { state: weatherState, setTemperatureUnit } = useWeather();
-  const { state: locationState, removeLocation } = useLocation();
+  const { state: locationState, clearAllLocations } = useLocation();
   const { temperatureUnit } = weatherState;
 
   const isImperial = temperatureUnit === 'imperial';
@@ -37,14 +37,12 @@ export function SettingsScreen() {
           text: 'Clear All',
           style: 'destructive',
           onPress: () => {
-            locationState.savedLocations.forEach((loc) => {
-              removeLocation(loc.id);
-            });
+            clearAllLocations();
           },
         },
       ]
     );
-  }, [locationState.savedLocations, removeLocation]);
+  }, [locationState.savedLocations, clearAllLocations]);
 
   return (
     <View style={styles.container}>

@@ -10,7 +10,7 @@ import { useWeather } from '@/hooks/useWeather';
 import { Colors } from '@/constants/colors';
 import { Config } from '@/constants/config';
 import { SavedLocation, Coordinates } from '@/types/weather';
-import { LocationService } from '@/services/locationService';
+import { WeatherService } from '@/services/weatherApi';
 
 interface SearchResult {
   name: string;
@@ -32,8 +32,14 @@ export function LocationsScreen() {
 
     setIsSearching(true);
     try {
-      const results = await LocationService.searchCity(query);
-      setSearchResults(results);
+      const results = await WeatherService.searchCity(query);
+      setSearchResults(
+        results.map((r) => ({
+          name: r.name,
+          country: r.country,
+          coordinates: { latitude: r.lat, longitude: r.lon },
+        }))
+      );
     } catch {
       setSearchResults([]);
     } finally {

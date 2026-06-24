@@ -77,37 +77,6 @@ export const LocationService = {
     };
   },
 
-  /**
-   * Search for cities by name using OpenWeatherMap Geocoding API.
-   * Returns an array of matching locations.
-   */
-  async searchCity(query: string): Promise<{ name: string; country: string; coordinates: Coordinates }[]> {
-    try {
-      const url = `${Config.api.geoUrl}/direct?q=${encodeURIComponent(query)}&limit=${Config.defaults.maxSearchResults}&appid=${Config.api.key}`;
-
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), Config.api.timeout);
-
-      const response = await fetch(url, { signal: controller.signal });
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        throw new Error(`Geocoding request failed with status ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      return data.map((item: { name: string; country: string; lat: number; lon: number }) => ({
-        name: item.name,
-        country: item.country,
-        coordinates: {
-          latitude: item.lat,
-          longitude: item.lon,
-        },
-      }));
-    } catch (error) {
-      console.warn('City search failed:', error);
-      return [];
-    }
-  },
+  // Note: City search is handled by WeatherService.searchCity which includes
+  // input sanitization and structured error handling. Use that instead.
 };

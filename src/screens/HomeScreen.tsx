@@ -4,7 +4,6 @@ import {
   ScrollView,
   RefreshControl,
   StyleSheet,
-  FlatList,
   Text,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -63,10 +62,6 @@ export function HomeScreen() {
   const gradient = getTimeOfDayGradient();
   const todayHourly: HourlyForecast[] = forecast?.days[0]?.hourly || [];
 
-  const renderHourlyItem = ({ item }: { item: HourlyForecast }) => (
-    <HourlyForecastItem hourly={item} unit={temperatureUnit} />
-  );
-
   return (
     <LinearGradient colors={gradient} style={styles.container}>
       <ScrollView
@@ -85,14 +80,15 @@ export function HomeScreen() {
         {todayHourly.length > 0 && (
           <View style={styles.hourlySection}>
             <Text style={styles.sectionTitle}>Hourly Forecast</Text>
-            <FlatList
-              data={todayHourly}
-              renderItem={renderHourlyItem}
-              keyExtractor={(item) => item.dt.toString()}
+            <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.hourlyList}
-            />
+            >
+              {todayHourly.map((item) => (
+                <HourlyForecastItem key={item.dt.toString()} hourly={item} unit={temperatureUnit} />
+              ))}
+            </ScrollView>
           </View>
         )}
 

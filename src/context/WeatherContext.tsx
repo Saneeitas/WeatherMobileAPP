@@ -1,4 +1,5 @@
-import React, { createContext, useReducer, useCallback, ReactNode } from 'react';
+import React, { createContext, useReducer, useCallback, useEffect, ReactNode } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   WeatherData,
   ForecastData,
@@ -16,12 +17,13 @@ interface WeatherState {
   isLoading: boolean;
   error: WeatherError | null;
   lastUpdated: number | null;
+  lastCoordinates: { lat: number; lon: number } | null;
 }
 
 // Action types
 type WeatherAction =
   | { type: 'FETCH_WEATHER_START' }
-  | { type: 'FETCH_WEATHER_SUCCESS'; payload: { weather: WeatherData; forecast: ForecastData } }
+  | { type: 'FETCH_WEATHER_SUCCESS'; payload: { weather: WeatherData; forecast: ForecastData; coordinates: { lat: number; lon: number } } }
   | { type: 'FETCH_WEATHER_ERROR'; payload: WeatherError }
   | { type: 'SET_TEMPERATURE_UNIT'; payload: TemperatureUnit }
   | { type: 'CLEAR_ERROR' };
@@ -41,6 +43,7 @@ const initialState: WeatherState = {
   isLoading: false,
   error: null,
   lastUpdated: null,
+  lastCoordinates: null,
 };
 
 function weatherReducer(state: WeatherState, action: WeatherAction): WeatherState {
@@ -54,12 +57,13 @@ function weatherReducer(state: WeatherState, action: WeatherAction): WeatherStat
         currentWeather: action.payload.weather,
         forecast: action.payload.forecast,
         lastUpdated: Date.now(),
+        lastCoordinates: action.payload.coordinates,
         error: null,
       };
     case 'FETCH_WEATHER_ERROR':
       return { ...state, isLoading: false, error: action.payload };
     case 'SET_TEMPERATURE_UNIT':
-      return { ...state, temperatureUnit: action.payload };
+      return { ...state, temperatureUnit: action.payload, lastUpdated: null };
     case 'CLEAR_ERROR':
       return { ...state, error: null };
     default:
@@ -76,6 +80,24 @@ interface WeatherProviderProps {
 export function WeatherProvider({ children }: WeatherProviderProps) {
   const [state, dispatch] = useReducer(weatherReducer, initialState);
 
+  // Load persisted temperature unit on mount
+  useEffect(() => {
+    const loadPersistedUnit = async () => {
+      try {
+        const stored = await AsyncStorage.getItem(Config.storage.settingsKey);
+        if (stored) {
+          const settings = JSON.parse(stored);
+          if (settings.temperatureUnit === 'metric' || settings.temperatureUnit === 'imperial') {
+            dispatch({ type: 'SET_TEMPERATURE_UNIT', payload: settings.temperatureUnit });
+          }
+        }
+      } catch (error) {
+        console.warn('Failed to load persisted settings:', error);
+      }
+    };
+    loadPersistedUnit();
+  }, []);
+
   const fetchWeather = useCallback(
     async (lat: number, lon: number) => {
       dispatch({ type: 'FETCH_WEATHER_START' });
@@ -88,7 +110,7 @@ export function WeatherProvider({ children }: WeatherProviderProps) {
 
         dispatch({
           type: 'FETCH_WEATHER_SUCCESS',
-          payload: { weather, forecast },
+          payload: { weather, forecast, coordinates: { lat, lon } },
         });
       } catch (error) {
         const weatherError: WeatherError = {
@@ -106,6 +128,13 @@ export function WeatherProvider({ children }: WeatherProviderProps) {
 
   const setTemperatureUnit = useCallback((unit: TemperatureUnit) => {
     dispatch({ type: 'SET_TEMPERATURE_UNIT', payload: unit });
+    // Persist the unit preference
+    AsyncStorage.setItem(
+      Config.storage.settingsKey,
+      JSON.stringify({ temperatureUnit: unit })
+    ).catch((error) => {
+      console.warn('Failed to persist temperature unit:', error);
+    });
   }, []);
 
   const clearError = useCallback(() => {
