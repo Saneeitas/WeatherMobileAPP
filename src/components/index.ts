@@ -9,3 +9,4 @@ export { LoadingSpinner } from './LoadingSpinner';
 export { ErrorMessage } from './ErrorMessage';
 export { WeatherDetails } from './WeatherDetails';
 export { Header } from './Header';
+export { SplashScreen } from './SplashScreen';
