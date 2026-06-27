@@ -22,7 +22,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#2563EB"
       },
-      "package": "com.weathermobileapp"
+      "package": "com.weathermobileapp",
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
     },
     "platforms": [
       "ios",
@@ -35,6 +39,12 @@
           "locationAlwaysAndWhenInUsePermission": "Allow WeatherMobileAPP to use your location to show local weather."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "4fb91117-952d-41d9-9219-8bfcc1f925a2"
+      }
+    },
+    "owner": "techsion"
   }
 }
