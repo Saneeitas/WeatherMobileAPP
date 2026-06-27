@@ -36,7 +36,6 @@ export function SearchBar({ placeholder = 'Search city...', onSearch, debounceMs
     }
   }, [onSearch]);
 
-  // Clean up debounce timer on unmount to prevent setState on unmounted component
   useEffect(() => {
     return () => {
       if (timerRef.current) {
@@ -47,7 +46,7 @@ export function SearchBar({ placeholder = 'Search city...', onSearch, debounceMs
 
   return (
     <View style={styles.container}>
-      <Ionicons name="search-outline" size={20} color={Colors.mediumGray} style={styles.searchIcon} />
+      <Ionicons name="search" size={18} color={Colors.mediumGray} style={styles.searchIcon} />
       <TextInput
         style={styles.input}
         value={query}
@@ -60,7 +59,7 @@ export function SearchBar({ placeholder = 'Search city...', onSearch, debounceMs
       />
       {query.length > 0 && (
         <TouchableOpacity onPress={handleClear} style={styles.clearButton}>
-          <Ionicons name="close-circle" size={20} color={Colors.mediumGray} />
+          <Ionicons name="close-circle" size={18} color={Colors.mediumGray} />
         </TouchableOpacity>
       )}
     </View>
@@ -71,24 +70,25 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.lightGray,
-    borderRadius: 12,
-    paddingHorizontal: 12,
+    backgroundColor: '#F1F5F9',
+    borderRadius: 14,
+    paddingHorizontal: 14,
     marginHorizontal: 16,
     marginVertical: 8,
-    height: 44,
+    height: 46,
   },
   searchIcon: {
-    marginRight: 8,
+    marginRight: 10,
   },
   input: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 15,
+    fontWeight: '500',
     color: Colors.textDark,
     paddingVertical: 0,
   },
   clearButton: {
     padding: 4,
-    marginLeft: 4,
+    marginLeft: 6,
   },
 });

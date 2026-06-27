@@ -61,13 +61,15 @@ export function WeatherDetails({ weather, unit = 'metric' }: WeatherDetailsProps
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Weather Details</Text>
+      <Text style={styles.title}>Details</Text>
       <View style={styles.grid}>
         {details.map((item) => (
           <View key={item.label} style={styles.item}>
-            <Ionicons name={item.icon} size={22} color={Colors.primary} />
-            <Text style={styles.label}>{item.label}</Text>
+            <View style={styles.iconBg}>
+              <Ionicons name={item.icon} size={20} color={Colors.primary} />
+            </View>
             <Text style={styles.value}>{item.value}</Text>
+            <Text style={styles.label}>{item.label}</Text>
           </View>
         ))}
       </View>
@@ -78,41 +80,52 @@ export function WeatherDetails({ weather, unit = 'metric' }: WeatherDetailsProps
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 16,
-    marginTop: 16,
+    marginTop: 20,
     marginBottom: 8,
   },
   title: {
-    fontSize: 17,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: '700',
     color: Colors.textDark,
-    marginBottom: 12,
+    marginBottom: 14,
+    letterSpacing: -0.3,
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     backgroundColor: Colors.cardBackgroundSolid,
-    borderRadius: 16,
-    padding: 8,
+    borderRadius: 20,
+    padding: 12,
     shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 3,
+    shadowRadius: 12,
+    elevation: 4,
   },
   item: {
     width: '33.33%',
     alignItems: 'center',
     paddingVertical: 16,
   },
-  label: {
-    fontSize: 12,
-    color: Colors.textMuted,
-    marginTop: 6,
+  iconBg: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    backgroundColor: '#EFF6FF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
   },
   value: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 15,
+    fontWeight: '700',
     color: Colors.textDark,
-    marginTop: 4,
+    marginBottom: 2,
+  },
+  label: {
+    fontSize: 11,
+    fontWeight: '500',
+    color: Colors.textMuted,
+    letterSpacing: 0.2,
   },
 });

@@ -11,11 +11,14 @@ interface ErrorMessageProps {
 export function ErrorMessage({ message, onRetry }: ErrorMessageProps) {
   return (
     <View style={styles.container}>
-      <Ionicons name="alert-circle-outline" size={48} color={Colors.error} />
+      <View style={styles.iconBg}>
+        <Ionicons name="alert-circle" size={32} color={Colors.error} />
+      </View>
+      <Text style={styles.title}>Something went wrong</Text>
       <Text style={styles.message}>{message}</Text>
       {onRetry && (
-        <TouchableOpacity style={styles.retryButton} onPress={onRetry} activeOpacity={0.7}>
-          <Ionicons name="refresh-outline" size={18} color={Colors.white} />
+        <TouchableOpacity style={styles.retryButton} onPress={onRetry} activeOpacity={0.8}>
+          <Ionicons name="refresh" size={16} color={Colors.white} />
           <Text style={styles.retryText}>Try Again</Text>
         </TouchableOpacity>
       )}
@@ -28,23 +31,38 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 32,
+    padding: 40,
+  },
+  iconBg: {
+    width: 64,
+    height: 64,
+    borderRadius: 20,
+    backgroundColor: '#FEF2F2',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: Colors.textDark,
+    marginBottom: 8,
   },
   message: {
-    fontSize: 15,
+    fontSize: 14,
+    fontWeight: '500',
     color: Colors.textMuted,
     textAlign: 'center',
-    marginTop: 16,
-    lineHeight: 22,
+    lineHeight: 20,
   },
   retryButton: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.primary,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 8,
-    marginTop: 20,
+    paddingHorizontal: 22,
+    paddingVertical: 12,
+    borderRadius: 12,
+    marginTop: 24,
   },
   retryText: {
     color: Colors.white,

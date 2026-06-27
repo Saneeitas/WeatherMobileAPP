@@ -19,7 +19,7 @@ export function Header({ title, subtitle, rightIcon, onRightPress }: HeaderProps
       </View>
       {rightIcon && onRightPress && (
         <TouchableOpacity onPress={onRightPress} style={styles.actionButton} activeOpacity={0.7}>
-          <Ionicons name={rightIcon} size={24} color={Colors.textDark} />
+          <Ionicons name={rightIcon} size={22} color={Colors.textDark} />
         </TouchableOpacity>
       )}
     </View>
@@ -31,28 +31,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingHorizontal: 20,
+    paddingTop: 12,
     paddingBottom: 8,
   },
   titleContainer: {
     flex: 1,
   },
   title: {
-    fontSize: 28,
-    fontWeight: '700',
+    fontSize: 30,
+    fontWeight: '800',
     color: Colors.textDark,
+    letterSpacing: -0.5,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 13,
+    fontWeight: '500',
     color: Colors.textMuted,
     marginTop: 2,
   },
   actionButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: Colors.lightGray,
+    width: 42,
+    height: 42,
+    borderRadius: 14,
+    backgroundColor: '#F1F5F9',
     alignItems: 'center',
     justifyContent: 'center',
   },

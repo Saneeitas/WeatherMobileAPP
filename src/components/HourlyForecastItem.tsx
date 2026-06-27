@@ -17,19 +17,19 @@ function formatHour(timestamp: number): string {
   return `${displayHour}${period}`;
 }
 
-export function HourlyForecastItem({ hourly, unit }: HourlyForecastItemProps) {
-  const unitSymbol = unit === 'metric' ? '°' : '°';
-
+export function HourlyForecastItem({ hourly }: HourlyForecastItemProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.time}>{formatHour(hourly.dt)}</Text>
-      <WeatherIcon
-        conditionId={hourly.condition.id}
-        iconCode={hourly.condition.icon}
-        size={28}
-        color={Colors.textPrimary}
-      />
-      <Text style={styles.temp}>{Math.round(hourly.temperature)}{unitSymbol}</Text>
+      <View style={styles.iconWrap}>
+        <WeatherIcon
+          conditionId={hourly.condition.id}
+          iconCode={hourly.condition.icon}
+          size={26}
+          color={Colors.textPrimary}
+        />
+      </View>
+      <Text style={styles.temp}>{Math.round(hourly.temperature)}°</Text>
     </View>
   );
 }
@@ -38,22 +38,28 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     paddingHorizontal: 14,
-    paddingVertical: 12,
-    backgroundColor: Colors.cardBackground,
-    borderRadius: 16,
+    paddingVertical: 14,
+    backgroundColor: Colors.glassBg,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: Colors.glassBorder,
     marginRight: 10,
-    minWidth: 68,
+    minWidth: 72,
   },
   time: {
     fontSize: 12,
     color: Colors.textSecondary,
-    fontWeight: '500',
-    marginBottom: 8,
+    fontWeight: '600',
+    letterSpacing: 0.2,
+    marginBottom: 10,
+  },
+  iconWrap: {
+    marginVertical: 4,
   },
   temp: {
-    fontSize: 15,
+    fontSize: 16,
     color: Colors.textPrimary,
     fontWeight: '600',
-    marginTop: 8,
+    marginTop: 10,
   },
 });

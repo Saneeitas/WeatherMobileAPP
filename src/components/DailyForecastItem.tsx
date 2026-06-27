@@ -18,7 +18,7 @@ function getDayName(timestamp: number): string {
   tomorrow.setDate(today.getDate() + 1);
 
   if (date.toDateString() === today.toDateString()) return 'Today';
-  if (date.toDateString() === tomorrow.toDateString()) return 'Tomorrow';
+  if (date.toDateString() === tomorrow.toDateString()) return 'Tmrw';
 
   return date.toLocaleDateString('en-US', { weekday: 'short' });
 }
@@ -35,7 +35,7 @@ export function DailyForecastItem({ day, unit, overallMin, overallMax }: DailyFo
       <WeatherIcon
         conditionId={day.condition.id}
         iconCode={day.condition.icon}
-        size={24}
+        size={22}
         color={Colors.darkGray}
       />
 
@@ -64,46 +64,48 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.lightGray,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F1F5F9',
   },
   dayName: {
-    width: 70,
-    fontSize: 15,
-    fontWeight: '500',
+    width: 48,
+    fontSize: 14,
+    fontWeight: '600',
     color: Colors.textDark,
+    letterSpacing: -0.2,
   },
   tempLow: {
-    width: 36,
+    width: 34,
     fontSize: 14,
+    fontWeight: '500',
     color: Colors.textMuted,
     textAlign: 'right',
-    marginLeft: 8,
+    marginLeft: 10,
   },
   barContainer: {
     flex: 1,
-    marginHorizontal: 12,
+    marginHorizontal: 14,
     justifyContent: 'center',
   },
   barBackground: {
-    height: 4,
-    borderRadius: 2,
-    backgroundColor: Colors.lightGray,
+    height: 5,
+    borderRadius: 3,
+    backgroundColor: '#F1F5F9',
     overflow: 'hidden',
   },
   barFill: {
     position: 'absolute',
     top: 0,
     bottom: 0,
-    borderRadius: 2,
+    borderRadius: 3,
     backgroundColor: Colors.primary,
   },
   tempHigh: {
-    width: 36,
+    width: 34,
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: '700',
     color: Colors.textDark,
     textAlign: 'left',
   },

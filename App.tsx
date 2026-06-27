@@ -6,10 +6,14 @@ import { WeatherProvider } from '@/context/WeatherContext';
 import { LocationProvider } from '@/context/LocationContext';
 import { AppNavigator } from '@/navigation/AppNavigator';
 
+const linking = {
+  prefixes: [],
+};
+
 export default function App() {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
+      <NavigationContainer linking={linking}>
         <WeatherProvider>
           <LocationProvider>
             <AppNavigator />

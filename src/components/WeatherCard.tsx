@@ -1,8 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { WeatherIcon } from './WeatherIcon';
-import { TemperatureDisplay } from './TemperatureDisplay';
 import { Colors } from '@/constants/colors';
 import { WeatherData, TemperatureUnit } from '@/types/weather';
 
@@ -11,90 +9,113 @@ interface WeatherCardProps {
   unit: TemperatureUnit;
 }
 
-function getGradientForTemp(temp: number): readonly [string, string, ...string[]] {
-  if (temp >= 35) return Colors.gradientWarm;
-  if (temp >= 20) return Colors.gradientClear;
-  if (temp >= 10) return Colors.gradientCool;
-  return Colors.gradientNight;
-}
-
 export function WeatherCard({ weather, unit }: WeatherCardProps) {
-  const gradient = getGradientForTemp(weather.temperature);
+  const unitSymbol = unit === 'metric' ? '°C' : '°F';
 
   return (
-    <LinearGradient colors={gradient} style={styles.card} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
+    <View style={styles.card}>
       <View style={styles.topRow}>
-        <View style={styles.locationInfo}>
-          <Text style={styles.cityName}>{weather.name}</Text>
-          <Text style={styles.condition}>{weather.condition.description}</Text>
+        <View style={styles.tempSection}>
+          <Text style={styles.temperature}>{Math.round(weather.temperature)}°</Text>
+          <Text style={styles.unitLabel}>{unitSymbol}</Text>
         </View>
         <WeatherIcon
           conditionId={weather.condition.id}
           iconCode={weather.condition.icon}
-          size={64}
+          size={72}
           color={Colors.textPrimary}
         />
       </View>
 
-      <View style={styles.temperatureSection}>
-        <TemperatureDisplay temperature={weather.temperature} unit={unit} size="large" />
-      </View>
+      <Text style={styles.condition}>{weather.condition.description}</Text>
 
-      <View style={styles.detailsRow}>
-        <Text style={styles.detailText}>
-          Feels like {Math.round(weather.feelsLike)}°
-        </Text>
-        <Text style={styles.detailText}>
-          H:{Math.round(weather.tempMax)}° L:{Math.round(weather.tempMin)}°
-        </Text>
+      <View style={styles.metaRow}>
+        <View style={styles.metaItem}>
+          <Text style={styles.metaLabel}>Feels like</Text>
+          <Text style={styles.metaValue}>{Math.round(weather.feelsLike)}°</Text>
+        </View>
+        <View style={styles.metaDivider} />
+        <View style={styles.metaItem}>
+          <Text style={styles.metaLabel}>High</Text>
+          <Text style={styles.metaValue}>{Math.round(weather.tempMax)}°</Text>
+        </View>
+        <View style={styles.metaDivider} />
+        <View style={styles.metaItem}>
+          <Text style={styles.metaLabel}>Low</Text>
+          <Text style={styles.metaValue}>{Math.round(weather.tempMin)}°</Text>
+        </View>
       </View>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 20,
-    padding: 24,
+    backgroundColor: Colors.glassBg,
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: Colors.glassBorder,
+    padding: 28,
     marginHorizontal: 16,
     marginVertical: 8,
-    shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 12,
-    elevation: 8,
   },
   topRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  tempSection: {
+    flexDirection: 'row',
     alignItems: 'flex-start',
   },
-  locationInfo: {
-    flex: 1,
-  },
-  cityName: {
-    fontSize: 22,
-    fontWeight: '600',
+  temperature: {
+    fontSize: 80,
+    fontWeight: '200',
     color: Colors.textPrimary,
-    marginBottom: 4,
+    lineHeight: 88,
+  },
+  unitLabel: {
+    fontSize: 20,
+    fontWeight: '400',
+    color: Colors.textSecondary,
+    marginTop: 14,
+    marginLeft: 2,
   },
   condition: {
-    fontSize: 15,
+    fontSize: 18,
+    fontWeight: '500',
     color: Colors.textSecondary,
     textTransform: 'capitalize',
+    marginTop: 4,
   },
-  temperatureSection: {
-    alignItems: 'center',
-    marginVertical: 16,
-  },
-  detailsRow: {
+  metaRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 24,
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    borderRadius: 14,
+    paddingVertical: 14,
+    paddingHorizontal: 8,
+  },
+  metaItem: {
+    flex: 1,
     alignItems: 'center',
   },
-  detailText: {
-    fontSize: 14,
-    color: Colors.textSecondary,
+  metaLabel: {
+    fontSize: 12,
     fontWeight: '500',
+    color: Colors.textSecondary,
+    letterSpacing: 0.3,
+    marginBottom: 4,
+  },
+  metaValue: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: Colors.textPrimary,
+  },
+  metaDivider: {
+    width: 1,
+    height: 28,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
   },
 });

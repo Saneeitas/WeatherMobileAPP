@@ -19,7 +19,7 @@ export function LocationCard({ location, onPress, onDelete }: LocationCardProps)
     >
       <View style={styles.content}>
         <View style={styles.iconContainer}>
-          <Ionicons name="location" size={24} color={Colors.primary} />
+          <Ionicons name="location" size={20} color={Colors.primary} />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.cityName}>{location.name}</Text>
@@ -30,9 +30,9 @@ export function LocationCard({ location, onPress, onDelete }: LocationCardProps)
       <TouchableOpacity
         style={styles.deleteButton}
         onPress={() => onDelete(location.id)}
-        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       >
-        <Ionicons name="trash-outline" size={20} color={Colors.error} />
+        <Ionicons name="trash-outline" size={18} color={Colors.error} />
       </TouchableOpacity>
     </TouchableOpacity>
   );
@@ -44,14 +44,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: Colors.cardBackgroundSolid,
-    borderRadius: 16,
+    borderRadius: 18,
     padding: 16,
     marginHorizontal: 16,
-    marginVertical: 6,
+    marginVertical: 5,
     shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
     elevation: 3,
   },
   content: {
@@ -60,13 +60,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   iconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: Colors.offWhite,
+    width: 42,
+    height: 42,
+    borderRadius: 14,
+    backgroundColor: '#EFF6FF',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 12,
+    marginRight: 14,
   },
   textContainer: {
     flex: 1,
@@ -75,10 +75,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: Colors.textDark,
+    letterSpacing: -0.2,
     marginBottom: 2,
   },
   country: {
     fontSize: 13,
+    fontWeight: '500',
     color: Colors.textMuted,
   },
   deleteButton: {

@@ -29,8 +29,9 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   message: {
-    marginTop: 16,
-    fontSize: 15,
+    marginTop: 14,
+    fontSize: 14,
+    fontWeight: '500',
     color: Colors.textMuted,
     textAlign: 'center',
   },

@@ -36,9 +36,7 @@ export function SettingsScreen() {
         {
           text: 'Clear All',
           style: 'destructive',
-          onPress: () => {
-            clearAllLocations();
-          },
+          onPress: () => clearAllLocations(),
         },
       ]
     );
@@ -58,11 +56,13 @@ export function SettingsScreen() {
           <View style={styles.card}>
             <View style={styles.settingRow}>
               <View style={styles.settingLeft}>
-                <Ionicons name="thermometer-outline" size={22} color={Colors.primary} />
+                <View style={styles.iconBg}>
+                  <Ionicons name="thermometer-outline" size={18} color={Colors.primary} />
+                </View>
                 <View style={styles.settingTextContainer}>
                   <Text style={styles.settingLabel}>Temperature Unit</Text>
                   <Text style={styles.settingDescription}>
-                    {isImperial ? 'Fahrenheit' : 'Celsius'}
+                    {isImperial ? 'Fahrenheit (°F)' : 'Celsius (°C)'}
                   </Text>
                 </View>
               </View>
@@ -84,9 +84,11 @@ export function SettingsScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Data</Text>
           <View style={styles.card}>
-            <TouchableOpacity style={styles.settingRow} onPress={handleClearLocations}>
+            <TouchableOpacity style={styles.settingRow} onPress={handleClearLocations} activeOpacity={0.7}>
               <View style={styles.settingLeft}>
-                <Ionicons name="trash-outline" size={22} color={Colors.error} />
+                <View style={[styles.iconBg, { backgroundColor: '#FEF2F2' }]}>
+                  <Ionicons name="trash-outline" size={18} color={Colors.error} />
+                </View>
                 <View style={styles.settingTextContainer}>
                   <Text style={[styles.settingLabel, { color: Colors.error }]}>
                     Clear Saved Locations
@@ -96,7 +98,7 @@ export function SettingsScreen() {
                   </Text>
                 </View>
               </View>
-              <Ionicons name="chevron-forward" size={20} color={Colors.mediumGray} />
+              <Ionicons name="chevron-forward" size={18} color={Colors.mediumGray} />
             </TouchableOpacity>
           </View>
         </View>
@@ -107,7 +109,9 @@ export function SettingsScreen() {
           <View style={styles.card}>
             <View style={styles.settingRow}>
               <View style={styles.settingLeft}>
-                <Ionicons name="information-circle-outline" size={22} color={Colors.primary} />
+                <View style={styles.iconBg}>
+                  <Ionicons name="information-circle-outline" size={18} color={Colors.primary} />
+                </View>
                 <View style={styles.settingTextContainer}>
                   <Text style={styles.settingLabel}>App Version</Text>
                   <Text style={styles.settingDescription}>1.0.0</Text>
@@ -119,7 +123,9 @@ export function SettingsScreen() {
 
             <View style={styles.settingRow}>
               <View style={styles.settingLeft}>
-                <Ionicons name="cloud-outline" size={22} color={Colors.primary} />
+                <View style={styles.iconBg}>
+                  <Ionicons name="cloud-outline" size={18} color={Colors.primary} />
+                </View>
                 <View style={styles.settingTextContainer}>
                   <Text style={styles.settingLabel}>Weather Data</Text>
                   <Text style={styles.settingDescription}>Powered by OpenWeatherMap</Text>
@@ -137,31 +143,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.offWhite,
-    paddingTop: 48,
+    paddingTop: 52,
   },
   scrollContent: {
     paddingBottom: 24,
   },
   section: {
-    marginTop: 16,
+    marginTop: 20,
     paddingHorizontal: 16,
   },
   sectionTitle: {
-    fontSize: 13,
-    fontWeight: '600',
+    fontSize: 12,
+    fontWeight: '700',
     color: Colors.textMuted,
     textTransform: 'uppercase',
-    letterSpacing: 0.5,
-    marginBottom: 8,
+    letterSpacing: 0.8,
+    marginBottom: 10,
     marginLeft: 4,
   },
   card: {
     backgroundColor: Colors.cardBackgroundSolid,
-    borderRadius: 16,
+    borderRadius: 18,
     shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 12,
     elevation: 3,
   },
   settingRow: {
@@ -169,24 +175,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingVertical: 16,
   },
   settingLeft: {
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
   },
+  iconBg: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: '#EFF6FF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   settingTextContainer: {
-    marginLeft: 12,
+    marginLeft: 14,
     flex: 1,
   },
   settingLabel: {
     fontSize: 15,
-    fontWeight: '500',
+    fontWeight: '600',
     color: Colors.textDark,
+    letterSpacing: -0.2,
   },
   settingDescription: {
     fontSize: 13,
+    fontWeight: '500',
     color: Colors.textMuted,
     marginTop: 2,
   },
@@ -195,8 +211,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   unitLabel: {
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: 13,
+    fontWeight: '600',
     color: Colors.mediumGray,
     marginHorizontal: 6,
   },
@@ -205,8 +221,8 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   divider: {
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: Colors.lightGray,
+    height: 1,
+    backgroundColor: '#F1F5F9',
     marginHorizontal: 16,
   },
 });

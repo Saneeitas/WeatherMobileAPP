@@ -78,8 +78,10 @@ export function LocationsScreen() {
   );
 
   const renderSearchResult = ({ item }: { item: SearchResult }) => (
-    <TouchableOpacity style={styles.searchResult} onPress={() => handleAddLocation(item)}>
-      <Ionicons name="add-circle-outline" size={22} color={Colors.primary} />
+    <TouchableOpacity style={styles.searchResult} onPress={() => handleAddLocation(item)} activeOpacity={0.7}>
+      <View style={styles.addIcon}>
+        <Ionicons name="add" size={16} color={Colors.primary} />
+      </View>
       <View style={styles.searchResultText}>
         <Text style={styles.searchResultName}>{item.name}</Text>
         <Text style={styles.searchResultCountry}>{item.country}</Text>
@@ -97,7 +99,10 @@ export function LocationsScreen() {
 
   return (
     <View style={styles.container}>
-      <Header title="Locations" subtitle={`${locationState.savedLocations.length}/${Config.defaults.maxSavedLocations} saved`} />
+      <Header
+        title="Locations"
+        subtitle={`${locationState.savedLocations.length}/${Config.defaults.maxSavedLocations} saved`}
+      />
 
       <SearchBar onSearch={handleSearch} placeholder="Search for a city..." />
 
@@ -125,7 +130,9 @@ export function LocationsScreen() {
         contentContainerStyle={styles.locationsList}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Ionicons name="location-outline" size={48} color={Colors.mediumGray} />
+            <View style={styles.emptyIconBg}>
+              <Ionicons name="location-outline" size={32} color={Colors.mediumGray} />
+            </View>
             <Text style={styles.emptyText}>No saved locations</Text>
             <Text style={styles.emptySubtext}>Search for a city to add it here</Text>
           </View>
@@ -139,21 +146,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.offWhite,
-    paddingTop: 48,
+    paddingTop: 52,
   },
   searchingContainer: {
-    height: 60,
+    height: 56,
   },
   resultsContainer: {
     backgroundColor: Colors.cardBackgroundSolid,
     marginHorizontal: 16,
-    borderRadius: 12,
+    borderRadius: 16,
     maxHeight: 200,
     shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 4,
+    shadowRadius: 12,
+    elevation: 5,
+    overflow: 'hidden',
   },
   resultsList: {
     padding: 4,
@@ -161,24 +169,33 @@ const styles = StyleSheet.create({
   searchResult: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.lightGray,
+    paddingVertical: 14,
+    paddingHorizontal: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F1F5F9',
+  },
+  addIcon: {
+    width: 30,
+    height: 30,
+    borderRadius: 10,
+    backgroundColor: '#EFF6FF',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   searchResultText: {
-    marginLeft: 10,
+    marginLeft: 12,
     flex: 1,
   },
   searchResultName: {
     fontSize: 15,
-    fontWeight: '500',
+    fontWeight: '600',
     color: Colors.textDark,
   },
   searchResultCountry: {
-    fontSize: 13,
+    fontSize: 12,
+    fontWeight: '500',
     color: Colors.textMuted,
-    marginTop: 2,
+    marginTop: 1,
   },
   locationsList: {
     paddingTop: 12,
@@ -189,15 +206,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 80,
   },
+  emptyIconBg: {
+    width: 64,
+    height: 64,
+    borderRadius: 20,
+    backgroundColor: '#F1F5F9',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
   emptyText: {
     fontSize: 17,
-    fontWeight: '600',
-    color: Colors.textMuted,
-    marginTop: 16,
+    fontWeight: '700',
+    color: Colors.textDark,
   },
   emptySubtext: {
     fontSize: 14,
-    color: Colors.mediumGray,
+    fontWeight: '500',
+    color: Colors.textMuted,
     marginTop: 6,
   },
 });

@@ -74,14 +74,16 @@ export function ForecastScreen() {
       >
         <View style={styles.card}>
           <Text style={styles.cardTitle}>5-Day Forecast</Text>
-          {forecast.days.map((day) => (
-            <DailyForecastItem
-              key={day.dt}
-              day={day}
-              unit={temperatureUnit}
-              overallMin={overallMin}
-              overallMax={overallMax}
-            />
+          {forecast.days.map((day, index) => (
+            <View key={day.dt}>
+              <DailyForecastItem
+                day={day}
+                unit={temperatureUnit}
+                overallMin={overallMin}
+                overallMax={overallMax}
+              />
+              {index === forecast.days.length - 1 && <View style={styles.lastItemPad} />}
+            </View>
           ))}
         </View>
       </ScrollView>
@@ -93,29 +95,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.offWhite,
-    paddingTop: 48,
+    paddingTop: 52,
   },
   scrollContent: {
     paddingBottom: 24,
   },
   card: {
     backgroundColor: Colors.cardBackgroundSolid,
-    borderRadius: 16,
+    borderRadius: 20,
     marginHorizontal: 16,
-    marginTop: 8,
+    marginTop: 12,
     shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 3,
+    shadowRadius: 12,
+    elevation: 4,
     overflow: 'hidden',
   },
   cardTitle: {
-    fontSize: 17,
-    fontWeight: '600',
+    fontSize: 16,
+    fontWeight: '700',
     color: Colors.textDark,
-    padding: 16,
-    paddingBottom: 8,
+    padding: 20,
+    paddingBottom: 4,
+    letterSpacing: -0.2,
+  },
+  lastItemPad: {
+    height: 8,
   },
   emptyContainer: {
     flex: 1,
@@ -123,7 +129,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    fontSize: 15,
+    fontSize: 14,
+    fontWeight: '500',
     color: Colors.textMuted,
   },
 });
